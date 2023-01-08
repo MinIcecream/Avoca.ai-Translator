@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Avoca.ai Translator</title>
+
+    <script src="avoca.ai.js"></script>
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+</head>
+
+<body>
+    <div id="header">
+        <div id="page-title">
+            <h1>Avoca.ai</h1>
+        </div>
+        <hr style="border: 1px solid rgb(180,180,180)" />
+    </div> 
+    <div id="main-content">
+        <div id="root"></div>
+    </div> 
+
+    <script type="text/babel">
+
+        class TranslateBoxes extends React.Component
+        {
+            constructor(props)
+            {
+                super(props);
+                this.state={
+                    input:"",
+                    ouput:""
+                };
+                this.handleChange=this.handleChange.bind(this);
+                this.handleClick=this.handleClick.bind(this);
+            }
+
+            handleChange (event)
+            {
+                this.setState({
+
+                     input: event.target.value
+
+                })
+                expandTextBoxes();
+            }
+
+            handleClick()
+            {
+                this.setState((state)=>({
+                    output:(state.input).trim(), 
+                }));
+                updateOutputBox();
+            }
+
+            render()
+            { 
+                return (
+                    <div>
+                        <div id="translate-box-container">
+                            <textarea placeholder="Enter text here..." className="text-box" rows="13" data-min-rows="13" id="input-box" text={this.state.input} onChange={this.handleChange}/>
+                            <textarea placeholder="Translation" className="text-box" rows="13" data-min-rows="13" id="output-box" readOnly value={this.state.output} />
+                        </div>
+                        <button id="translate-button" onClick={this.handleClick}>Translate!</button>
+                    </div>
+                )
+            }
+        }
+
+        function App() {
+          return (
+            <section>
+              <TranslateBoxes />
+            </section>
+          );
+        }
+
+        ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+</body>
+</html>
